@@ -1,0 +1,93 @@
+[1mdiff --git a/app/controllers/tasks_controller.rb b/app/controllers/tasks_controller.rb[m
+[1mindex e8d8b95..50a9e15 100644[m
+[1m--- a/app/controllers/tasks_controller.rb[m
+[1m+++ b/app/controllers/tasks_controller.rb[m
+[36m@@ -11,7 +11,7 @@[m [mclass TasksController < ApplicationController[m
+     @task = Task.new[m
+   end[m
+   [m
+[31m-  def creare[m
+[32m+[m[32m  def create[m
+     @task = Task.new(task_params)[m
+     [m
+     if@task.save[m
+[36m@@ -41,6 +41,12 @@[m [mclass TasksController < ApplicationController[m
+   end[m
+   [m
+   def destroy[m
+[32m+[m[32m    @task = Task.find(params[:id])[m
+[32m+[m[32m    @task.destroy[m
+[32m+[m[41m    [m
+[32m+[m[32m    flash[:success] = "タスクが正常に削除されました"[m
+[32m+[m[32m    redirect_to tasks_url[m
+[32m+[m[41m      [m
+   end[m
+   [m
+   private[m
+[1mdiff --git a/app/models/message.rb b/app/models/message.rb[m
+[1mdeleted file mode 100644[m
+[1mindex 28bdd9d..0000000[m
+[1m--- a/app/models/message.rb[m
+[1m+++ /dev/null[m
+[36m@@ -1,2 +0,0 @@[m
+[31m-class Message < ApplicationRecord[m
+[31m-end[m
+[1mdiff --git a/app/views/tasks/index.html.erb b/app/views/tasks/index.html.erb[m
+[1mindex edc878e..3ad3116 100644[m
+[1m--- a/app/views/tasks/index.html.erb[m
+[1m+++ b/app/views/tasks/index.html.erb[m
+[36m@@ -6,4 +6,4 @@[m
+   <% end %>[m
+ </ul>[m
+ [m
+[31m-<%= link_to"新規タスクの作成", new_tasks_path %>[m
+\ No newline at end of file[m
+[32m+[m[32m<%= link_to"新規タスクの作成", new_task_path %>[m
+\ No newline at end of file[m
+[1mdiff --git a/app/views/tasks/show.html.erb b/app/views/tasks/show.html.erb[m
+[1mindex 3380e99..6ebe7b5 100644[m
+[1m--- a/app/views/tasks/show.html.erb[m
+[1m+++ b/app/views/tasks/show.html.erb[m
+[36m@@ -3,5 +3,4 @@[m
+ [m
+ <%= link_to"一覧に戻る", tasks_path %>[m
+ <%= link_to"このタスクを編集する", edit_task_path(@task) %>[m
+[31m-<%= link_to"このタスクを削除する", @task, method :delete,[m
+[31m-  data: { confirm: "本当に削除してよろしいですか？" } %>[m
+\ No newline at end of file[m
+[32m+[m[32m<%= link_to"このタスクを削除する", @task, method: :delete, data: { confirm: "本当に削除してよろしいですか？" } %>[m
+\ No newline at end of file[m
+[1mdiff --git a/db/migrate/20180524135039_create_messages.rb b/db/migrate/20180524135039_create_messages.rb[m
+[1mdeleted file mode 100644[m
+[1mindex 6a431d9..0000000[m
+[1m--- a/db/migrate/20180524135039_create_messages.rb[m
+[1m+++ /dev/null[m
+[36m@@ -1,9 +0,0 @@[m
+[31m-class CreateMessages < ActiveRecord::Migration[5.0][m
+[31m-  def change[m
+[31m-    create_table :messages do |t|[m
+[31m-      t.string :content[m
+[31m-[m
+[31m-      t.timestamps[m
+[31m-    end[m
+[31m-  end[m
+[31m-end[m
+[1mdiff --git a/db/schema.rb b/db/schema.rb[m
+[1mindex 0bad6c2..8f47e8e 100644[m
+[1m--- a/db/schema.rb[m
+[1m+++ b/db/schema.rb[m
+[36m@@ -10,13 +10,7 @@[m
+ #[m
+ # It's strongly recommended that you check this file into your version control system.[m
+ [m
+[31m-ActiveRecord::Schema.define(version: 20180524135039) do[m
+[31m-[m
+[31m-  create_table "messages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|[m
+[31m-    t.string   "content"[m
+[31m-    t.datetime "created_at", null: false[m
+[31m-    t.datetime "updated_at", null: false[m
+[31m-  end[m
+[32m+[m[32mActiveRecord::Schema.define(version: 20180524135310) do[m
+ [m
+   create_table "tasks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|[m
+     t.string   "content"[m
